@@ -14,7 +14,7 @@ Running `python3 main.py` writes the finished page to ./entry.png
 same fonts, same code, same bytes on every run. Python 3 + Pillow;
 no embedded image data, no local imports.
 """
-import sys, math
+import os, sys, math
 from PIL import Image, ImageDraw, ImageFont
 
 # =====================================================================
@@ -175,14 +175,18 @@ GREEN  = (74, 190, 110)
 PINK   = (232, 110, 168)
 WHITE  = (255, 255, 255)
 
-F = "/usr/share/fonts/truetype/noto/"
+# Fonts are vendored in fonts/ next to this script (Noto Sans Display and
+# Liberation Sans, both SIL Open Font License 1.1) and resolved relative to
+# this file, so the program renders identically on any machine.
+BASE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "fonts")
+F = os.path.join(BASE, "noto") + os.sep
 def font(name, size): return ImageFont.truetype(F + name, size)
 BLACK, CBLACK, XBOLD, BOLD, SEMI, MED, REG = ("NotoSansDisplay-Black.ttf",
     "NotoSansDisplay-CondensedBlack.ttf", "NotoSansDisplay-ExtraBold.ttf",
     "NotoSansDisplay-Bold.ttf", "NotoSansDisplay-SemiBold.ttf",
     "NotoSansDisplay-Medium.ttf", "NotoSansDisplay-Regular.ttf")
-LIB  = "/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf"
-LIBB = "/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf"
+LIB  = os.path.join(BASE, "liberation", "LiberationSans-Regular.ttf")
+LIBB = os.path.join(BASE, "liberation", "LiberationSans-Bold.ttf")
 def lib(s):  return ImageFont.truetype(LIB, s)
 def libb(s): return ImageFont.truetype(LIBB, s)
 
